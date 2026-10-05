@@ -3,263 +3,293 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#f7faf8" />
-  <meta name="description" content="CurbHelp prototype — simple exterior-only neighborhood tasks." />
-  <title>CurbHelp</title>
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="description" content="CurbHelp product-design simulator for exterior-only neighborhood tasks." />
+  <title>CurbHelp Simulator</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <svg class="svg-sprite" aria-hidden="true">
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M20.5 3.5C13 3.6 6.6 6.9 4.5 12.5c-1 2.7-.4 5.2 1.4 6.6 1.9 1.5 4.7 1.4 7.3-.1 5.4-3.2 7.1-9.4 7.3-15.5Z"/><path d="M5.4 18.6c2.8-4.4 6.3-7.6 11-10.2"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 3h6l1 4H8l1-4ZM7 7l1 14h8l1-14"/><path d="M10 11v6M14 11v6"/></symbol>
+    <symbol id="i-broom" viewBox="0 0 24 24"><path d="m16 3 5 5M18.5 5.5 10 14"/><path d="m9 13-6 6 2 2 7-5-3-3Z"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 22s7-6.2 7-13a7 7 0 1 0-14 0c0 6.8 7 13 7 13Z"/><circle cx="12" cy="9" r="2.2"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></symbol>
+    <symbol id="i-dollar" viewBox="0 0 24 24"><path d="M12 2v20M17 6.5c-1.2-1-2.8-1.5-5-1.5-2.5 0-4 1.2-4 3s1.3 2.6 4.4 3.2c3.2.6 4.6 1.6 4.6 3.8s-1.9 4-5.2 4c-2.3 0-4.2-.7-5.6-2"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4.5 6v5.5c0 4.8 2.7 8.1 7.5 9.5 4.8-1.4 7.5-4.7 7.5-9.5V6L12 3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 7h4l1.5-2h5L16 7h4v12H4V7Z"/><circle cx="12" cy="13" r="4"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><path d="M8 6h3a3 3 0 0 1 3 3v6a3 3 0 0 0 3 3h-1"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c.8-4 3.6-6 8-6s7.2 2 8 6"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></symbol>
+    <symbol id="i-nav" viewBox="0 0 24 24"><path d="m4 4 7 16 2.5-6.5L20 11 4 4Z"/></symbol>
+    <symbol id="i-stack" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/></symbol>
+  </svg>
+
   <main class="stage">
-    <section class="phone" aria-label="CurbHelp mobile prototype">
+    <section class="phone" aria-label="CurbHelp mobile app simulator">
+      <div class="dynamic-island" aria-hidden="true"></div>
       <div class="statusbar" aria-hidden="true">
         <span>9:41</span>
-        <span class="status-icons">▮▮▮  Wi-Fi  ▰</span>
+        <div class="status-icons"><span class="signal">▮▮▮▮</span><span>⌁</span><span class="battery"></span></div>
       </div>
 
-      <div id="screen-home" class="screen active">
-        <header class="app-header">
+      <div class="simulator-badge">SIMULATOR</div>
+
+      <section id="screen-home" class="screen active">
+        <header class="app-header home-header">
           <div class="brand" aria-label="CurbHelp">
-            <span class="brand-leaf">◆</span>
             <span>Curb<span>Help</span></span>
           </div>
-          <button class="icon-button" aria-label="Notifications">♢</button>
+          <button class="icon-button" aria-label="Notifications"><svg><use href="#i-bell"/></svg></button>
         </header>
 
-        <section class="content">
+        <div class="content">
           <article class="card property-card">
-            <div class="property-thumb house-thumb">⌂</div>
+            <div class="property-thumb house-illustration">
+              <span class="roof"></span><span class="house-body"></span><span class="door"></span><span class="tree-dot"></span>
+            </div>
             <div class="grow">
               <h2>Verified property</h2>
-              <p><span class="verified-dot">✓</span> Home • Property verified</p>
+              <p><span class="verified-dot"><svg><use href="#i-check"/></svg></span> Home • Property verified</p>
             </div>
-            <span class="chevron">›</span>
+            <svg class="chevron"><use href="#i-chevron"/></svg>
           </article>
 
           <button class="primary-btn large" data-go="post">
-            <span class="circle-plus">＋</span> Post an exterior task
+            <span class="circle-plus"><svg><use href="#i-plus"/></svg></span>
+            Post an exterior task
           </button>
 
           <button class="card repeat-card" data-go="post">
-            <div class="task-icon blue">↻</div>
-            <div class="grow left">
+            <span class="icon-tile blue"><svg><use href="#i-history"/></svg></span>
+            <span class="grow left">
               <h2>Repeat a recent chore</h2>
               <p>Trash bins to curb</p>
               <small>$10 • Wednesday evening</small>
-            </div>
-            <span class="chevron">›</span>
+            </span>
+            <svg class="chevron"><use href="#i-chevron"/></svg>
           </button>
 
           <div class="section-title-row">
-            <h2 class="section-title">Popular near you</h2>
+            <h2 class="section-title"><svg><use href="#i-pin"/></svg>Popular near you</h2>
             <button class="text-link">See all</button>
           </div>
 
           <div class="task-grid">
             <button class="mini-card" data-fill="Trash bins">
-              <span class="task-emoji">🗑️</span>
+              <span class="icon-tile green"><svg><use href="#i-trash"/></svg></span>
               <span><strong>Bins</strong><small>Move to curb</small></span>
-              <span class="chevron">›</span>
+              <svg class="chevron small"><use href="#i-chevron"/></svg>
             </button>
             <button class="mini-card" data-fill="Sweep walkway">
-              <span class="task-emoji">🧹</span>
+              <span class="icon-tile amber"><svg><use href="#i-broom"/></svg></span>
               <span><strong>Sweep walkway</strong><small>Keep it tidy</small></span>
-              <span class="chevron">›</span>
+              <svg class="chevron small"><use href="#i-chevron"/></svg>
             </button>
             <button class="mini-card" data-fill="Yard debris">
-              <span class="task-emoji">🍃</span>
+              <span class="leaf-task"><svg><use href="#i-leaf"/></svg></span>
               <span><strong>Yard debris</strong><small>Bag or move</small></span>
-              <span class="chevron">›</span>
+              <svg class="chevron small"><use href="#i-chevron"/></svg>
             </button>
             <button class="mini-card" data-fill="Water plants">
-              <span class="task-emoji">🪴</span>
+              <span class="plant-task">♟</span>
               <span><strong>Water plants</strong><small>Keep it healthy</small></span>
-              <span class="chevron">›</span>
+              <svg class="chevron small"><use href="#i-chevron"/></svg>
             </button>
           </div>
 
           <button class="card row-card" data-fill="Pull weeds">
-            <span class="task-emoji big">🌱</span>
+            <span class="sprout-task">♧</span>
             <span class="grow left"><strong>Pull weeds</strong><small>Exterior areas only</small></span>
-            <span class="chevron">›</span>
+            <svg class="chevron"><use href="#i-chevron"/></svg>
           </button>
-        </section>
-      </div>
+        </div>
+      </section>
 
-      <div id="screen-post" class="screen">
+      <section id="screen-post" class="screen">
         <header class="app-header compact">
-          <button class="back-btn" data-go="home" aria-label="Back">‹</button>
-          <div></div>
+          <button class="back-btn" data-go="home" aria-label="Back"><svg><use href="#i-back"/></svg></button>
         </header>
 
-        <section class="content post-content">
+        <div class="content">
           <h1>Post a Task</h1>
           <p class="subtitle">Tell helpers what you need done.</p>
 
           <button class="form-card">
-            <span class="field-icon">⌂</span>
+            <span class="icon-tile blue"><svg><use href="#i-home"/></svg></span>
             <span class="grow left"><small>Property</small><strong>Verified Home</strong></span>
-            <span class="chevron">›</span>
+            <svg class="chevron"><use href="#i-chevron"/></svg>
           </button>
 
           <button class="form-card" id="category-row">
-            <span class="field-icon">🗑️</span>
+            <span class="icon-tile blue"><svg><use href="#i-trash"/></svg></span>
             <span class="grow left"><small>Category</small><strong id="category-value">Trash bins</strong></span>
-            <span class="chevron">›</span>
+            <svg class="chevron"><use href="#i-chevron"/></svg>
           </button>
 
           <button class="form-card tall">
-            <span class="field-icon">⌖</span>
+            <span class="icon-tile blue"><svg><use href="#i-pin"/></svg></span>
             <span class="grow left">
               <small>Authorized work area</small>
               <strong>Driveway → curb only</strong>
               <span class="helper-copy">Add a photo and mark the allowed area for helpers.</span>
-              <span class="workarea-art" aria-hidden="true">
-                <span class="lawn"></span><span class="driveway"></span><span class="zone"></span>
+              <span class="workarea-photo" aria-hidden="true">
+                <span class="sky"></span><span class="demo-house"></span><span class="demo-lawn"></span><span class="demo-driveway"></span><span class="demo-zone"></span>
               </span>
             </span>
-            <span class="chevron">›</span>
+            <svg class="chevron top"><use href="#i-chevron"/></svg>
           </button>
 
           <button class="form-card">
-            <span class="field-icon green">$</span>
+            <span class="icon-tile green"><svg><use href="#i-dollar"/></svg></span>
             <span class="grow left"><small>Offer</small><strong>$10</strong></span>
-            <span class="chevron">›</span>
+            <svg class="chevron"><use href="#i-chevron"/></svg>
           </button>
 
           <button class="form-card">
-            <span class="field-icon blue-bg">◷</span>
+            <span class="icon-tile blue"><svg><use href="#i-clock"/></svg></span>
             <span class="grow left"><small>Time window</small><strong>6:00 – 8:00 PM</strong></span>
-            <span class="chevron">›</span>
+            <svg class="chevron"><use href="#i-chevron"/></svg>
           </button>
 
-          <button class="primary-btn large bottom-action" id="post-task-btn">Post task</button>
-        </section>
-      </div>
+          <button class="primary-btn large action-btn" id="post-task-btn">Post task</button>
+        </div>
+      </section>
 
-      <div id="screen-helper" class="screen">
+      <section id="screen-helper" class="screen">
         <header class="app-header compact">
-          <button class="back-btn" data-go="post" aria-label="Back">‹</button>
-          <div></div>
+          <button class="back-btn" data-go="post" aria-label="Back"><svg><use href="#i-back"/></svg></button>
         </header>
 
-        <section class="content helper-content">
+        <div class="content">
           <h1>Helper View</h1>
           <p class="subtitle">Review the task and route to decide.</p>
 
           <div class="map-card" aria-label="Illustrated route map">
-            <div class="map-grid"></div>
-            <div class="route-line route-a"></div>
-            <div class="route-line route-b"></div>
+            <div class="map-streets"></div>
+            <span class="park p1"></span><span class="park p2"></span>
+            <svg class="route-path" viewBox="0 0 320 180" preserveAspectRatio="none">
+              <path d="M48 146 C90 123 99 135 126 111 S183 90 205 72 S244 63 270 50" />
+            </svg>
             <span class="map-start"></span>
-            <span class="map-home">⌂</span>
-            <span class="map-chip">🚶 4 min</span>
+            <span class="map-home"><svg><use href="#i-home"/></svg></span>
+            <span class="map-chip"><svg><use href="#i-route"/></svg>4 min</span>
           </div>
 
           <article class="job-card">
             <div class="job-top">
-              <span class="task-icon green">🗑️</span>
+              <span class="icon-tile green large-icon"><svg><use href="#i-trash"/></svg></span>
               <div class="grow left">
                 <h2>$10 • Trash bins</h2>
                 <p>Move 2 bins from driveway to curb.</p>
                 <small>Exterior-only verified property.</small>
               </div>
             </div>
-            <div class="detail-row"><span>◷ &nbsp; Estimated time</span><strong>4 min</strong></div>
-            <div class="detail-row"><span>✓ &nbsp; Safety</span><strong>Before photo required</strong></div>
+            <div class="detail-row"><span><svg><use href="#i-clock"/></svg> Estimated time</span><strong>4 min</strong></div>
+            <div class="detail-row"><span><svg><use href="#i-shield"/></svg> Safety</span><strong>Before photo required</strong></div>
           </article>
 
-          <button class="secondary-primary bottom-action" id="accept-task-btn">Accept task</button>
-        </section>
-      </div>
+          <button class="blue-btn large action-btn" id="accept-task-btn">Accept task</button>
+        </div>
+      </section>
 
-      <div id="screen-complete" class="screen">
+      <section id="screen-complete" class="screen">
         <header class="app-header compact">
-          <button class="back-btn" data-go="helper" aria-label="Back">‹</button>
-          <div></div>
+          <button class="back-btn" data-go="helper" aria-label="Back"><svg><use href="#i-back"/></svg></button>
         </header>
 
-        <section class="content complete-content">
+        <div class="content">
           <h1>Complete Task</h1>
           <p class="subtitle">Confirm you completed the work.</p>
 
           <article class="form-card static">
-            <span class="field-icon green">✓</span>
+            <span class="icon-tile green"><svg><use href="#i-check"/></svg></span>
             <span class="grow left"><strong>Check-in verified</strong><small>GPS confirms authorized property</small></span>
-            <span class="chevron">›</span>
+            <svg class="chevron"><use href="#i-chevron"/></svg>
           </article>
 
           <article class="photo-card">
-            <div class="photo-heading"><span class="camera-icon">▣</span><div><strong>Before photo</strong><small>Photo captured at 6:18 PM</small></div></div>
-            <div class="yard-photo before"><span class="bin bin-1"></span><span class="bin bin-2"></span></div>
+            <div class="photo-heading">
+              <span class="icon-tile blue compact-icon"><svg><use href="#i-camera"/></svg></span>
+              <div><strong>Before photo</strong><small>Photo captured at 6:18 PM</small></div>
+            </div>
+            <div class="yard-photo before"><span class="shrubs"></span><span class="bin bin-1"></span><span class="bin bin-2"></span></div>
           </article>
 
           <article class="photo-card">
-            <div class="photo-heading"><span class="camera-icon">▣</span><div><strong>After photo</strong><small>Photo captured at 6:22 PM</small></div></div>
-            <div class="yard-photo after"><span class="curb"></span><span class="bin bin-1"></span><span class="bin bin-2"></span></div>
+            <div class="photo-heading">
+              <span class="icon-tile blue compact-icon"><svg><use href="#i-camera"/></svg></span>
+              <div><strong>After photo</strong><small>Photo captured at 6:22 PM</small></div>
+            </div>
+            <div class="yard-photo after"><span class="shrubs"></span><span class="curb"></span><span class="bin bin-1"></span><span class="bin bin-2"></span></div>
           </article>
 
           <article class="total-card">
-            <span>▤ &nbsp; Customer total</span>
+            <span><svg><use href="#i-stack"/></svg>Customer total <b>ⓘ</b></span>
             <strong>$11.50</strong>
           </article>
 
-          <button class="primary-btn large bottom-action" id="complete-task-btn">Submit completion</button>
-        </section>
-      </div>
+          <button class="primary-btn large action-btn" id="complete-task-btn">Submit completion</button>
+        </div>
+      </section>
 
-      <div id="screen-tasks" class="screen">
-        <header class="simple-title"><h1>Tasks</h1></header>
-        <section class="content">
+      <section id="screen-tasks" class="screen">
+        <header class="simple-title"><h1>Tasks</h1><p>Demo task history for this simulator.</p></header>
+        <div class="content">
           <article class="card task-list-card">
-            <span class="task-emoji big">🗑️</span>
+            <span class="icon-tile green"><svg><use href="#i-trash"/></svg></span>
             <span class="grow left"><strong>Trash bins to curb</strong><small>Today • 6:00–8:00 PM</small></span>
-            <span class="pill success">Posted</span>
+            <span class="pill success">Demo</span>
           </article>
           <article class="card task-list-card">
-            <span class="task-emoji big">🧹</span>
-            <span class="grow left"><strong>Sweep walkway</strong><small>Last Saturday</small></span>
+            <span class="icon-tile amber"><svg><use href="#i-broom"/></svg></span>
+            <span class="grow left"><strong>Sweep walkway</strong><small>Sample completed task</small></span>
             <span class="pill">Done</span>
           </article>
-        </section>
-      </div>
+        </div>
+      </section>
 
-      <div id="screen-route" class="screen">
-        <header class="simple-title"><h1>Route</h1></header>
-        <section class="content">
+      <section id="screen-route" class="screen">
+        <header class="simple-title"><h1>Route</h1><p>Example helper route.</p></header>
+        <div class="content">
           <div class="map-card route-screen-map">
-            <div class="map-grid"></div>
-            <div class="route-line route-a"></div>
-            <div class="route-line route-b"></div>
-            <span class="map-start"></span><span class="map-home">⌂</span><span class="map-chip">2 nearby tasks</span>
+            <div class="map-streets"></div>
+            <svg class="route-path" viewBox="0 0 320 180" preserveAspectRatio="none"><path d="M48 146 C90 123 99 135 126 111 S183 90 205 72 S244 63 270 50"/></svg>
+            <span class="map-start"></span><span class="map-home"><svg><use href="#i-home"/></svg></span><span class="map-chip">2 nearby tasks</span>
           </div>
-          <article class="card">
-            <h2>Nearby route</h2>
-            <p class="muted">Two exterior-only chores are within walking distance.</p>
-          </article>
-        </section>
-      </div>
+          <article class="card route-note"><strong>Nearby route</strong><p>Two exterior-only chores are shown for demonstration.</p></article>
+        </div>
+      </section>
 
-      <div id="screen-profile" class="screen">
-        <header class="simple-title"><h1>Profile</h1></header>
-        <section class="content">
+      <section id="screen-profile" class="screen">
+        <header class="simple-title"><h1>Profile</h1><p>Simulator information.</p></header>
+        <div class="content">
           <article class="profile-card">
-            <div class="avatar">CH</div>
+            <div class="avatar"><svg><use href="#i-leaf"/></svg></div>
             <h2>CurbHelp Demo</h2>
-            <p>No login required for this prototype.</p>
+            <p>No account or login is required.</p>
           </article>
           <article class="card info-list">
-            <p><strong>Verified property</strong><span>✓</span></p>
+            <p><strong>Verified property</strong><span>Demo</span></p>
             <p><strong>Exterior-only safety mode</strong><span>On</span></p>
-            <p><strong>Prototype data</strong><span>Local device</span></p>
+            <p><strong>Saved data</strong><span>None</span></p>
           </article>
-        </section>
-      </div>
+          <button class="outline-btn" id="reset-demo-btn">Reset simulator</button>
+        </div>
+      </section>
 
       <nav class="tabbar" aria-label="Bottom navigation">
-        <button data-tab="home" class="tab active"><span>⌂</span><small>Home</small></button>
-        <button data-tab="tasks" class="tab"><span>▤</span><small>Tasks</small></button>
-        <button data-tab="route" class="tab"><span>⌖</span><small>Route</small></button>
-        <button data-tab="profile" class="tab"><span>●</span><small>Profile</small></button>
+        <button data-tab="home" class="tab active"><svg><use href="#i-home"/></svg><small>Home</small></button>
+        <button data-tab="tasks" class="tab"><svg><use href="#i-list"/></svg><small>Tasks</small></button>
+        <button data-tab="route" class="tab"><svg><use href="#i-pin"/></svg><small>Route</small></button>
+        <button data-tab="profile" class="tab"><svg><use href="#i-user"/></svg><small>Profile</small></button>
       </nav>
 
       <div id="toast" class="toast" role="status" aria-live="polite"></div>
