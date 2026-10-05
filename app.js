@@ -1,39 +1,67 @@
 (() => {
   const screens = ["home","post","helper","complete","tasks","route","profile"];
   const navTabs = ["home","tasks","route","profile"];
+  const DEFAULTS = Object.freeze({
+    category: "Trash bins"
+  });
+
   const $ = (sel, root=document) => root.querySelector(sel);
   const $$ = (sel, root=document) => [...root.querySelectorAll(sel)];
   const toast = $("#toast");
 
-  const state = {
-    category: localStorage.getItem("curbhelp-category") || "Trash bins",
-    posted: localStorage.getItem("curbhelp-posted") === "true",
-    completed: localStorage.getItem("curbhelp-completed") === "true"
+  let state = {
+    category: DEFAULTS.category
   };
 
   function showToast(message) {
     toast.textContent = message;
     toast.classList.add("show");
     clearTimeout(showToast.timer);
-    showToast.timer = setTimeout(() => toast.classList.remove("show"), 1800);
+    showToast.timer = setTimeout(() => toast.classList.remove("show"), 1500);
   }
 
   function setScreen(name) {
     if (!screens.includes(name)) name = "home";
-    $$(".screen").forEach(el => el.classList.toggle("active", el.id === `screen-${name}`));
-    $$(".tab").forEach(tab => {
-      tab.classList.toggle("active", tab.dataset.tab === name || (!navTabs.includes(name) && tab.dataset.tab === "tasks"));
+
+    $$(".screen").forEach(screen => {
+      screen.classList.toggle("active", screen.id === `screen-${name}`);
     });
+
+    $$(".tab").forEach(tab => {
+      const activeTab = navTabs.includes(name) ? name : "tasks";
+      tab.classList.toggle("active", tab.dataset.tab === activeTab);
+    });
+
     const active = $("#screen-" + name);
     if (active) active.scrollTop = 0;
-    history.replaceState(null, "", "#" + name);
   }
 
   function setCategory(value) {
     state.category = value;
-    localStorage.setItem("curbhelp-category", value);
     const field = $("#category-value");
     if (field) field.textContent = value;
+  }
+
+  function resetSimulator({notify = false} = {}) {
+    state = { category: DEFAULTS.category };
+    setCategory(DEFAULTS.category);
+    setScreen("home");
+
+    // The simulator intentionally stores nothing. Remove any legacy
+    // prototype values that may exist from an older version.
+    try {
+      localStorage.removeItem("curbhelp-category");
+      localStorage.removeItem("curbhelp-posted");
+      localStorage.removeItem("curbhelp-completed");
+      sessionStorage.clear();
+    } catch (_) {}
+
+    // Keep a clean URL so refresh always starts at the default Home screen.
+    if (location.hash) {
+      history.replaceState(null, "", location.pathname + location.search);
+    }
+
+    if (notify) showToast("Simulator reset");
   }
 
   $$("[data-go]").forEach(button => {
@@ -53,36 +81,31 @@
 
   $("#category-row")?.addEventListener("click", () => {
     const options = ["Trash bins","Sweep walkway","Yard debris","Water plants","Pull weeds"];
-    const index = Math.max(0, options.indexOf(state.category));
-    setCategory(options[(index + 1) % options.length]);
-    showToast("Category changed");
+    const current = Math.max(0, options.indexOf(state.category));
+    setCategory(options[(current + 1) % options.length]);
+    showToast("Demo category changed");
   });
 
   $("#post-task-btn")?.addEventListener("click", () => {
-    state.posted = true;
-    localStorage.setItem("curbhelp-posted","true");
-    showToast("Task posted");
-    setTimeout(() => setScreen("helper"), 550);
+    showToast("Demo task posted");
+    setTimeout(() => setScreen("helper"), 420);
   });
 
   $("#accept-task-btn")?.addEventListener("click", () => {
-    showToast("Task accepted");
-    setTimeout(() => setScreen("complete"), 500);
+    showToast("Demo task accepted");
+    setTimeout(() => setScreen("complete"), 420);
   });
 
   $("#complete-task-btn")?.addEventListener("click", () => {
-    state.completed = true;
-    localStorage.setItem("curbhelp-completed","true");
-    showToast("Completion submitted");
-    setTimeout(() => setScreen("tasks"), 650);
+    showToast("Demo completion submitted");
+    setTimeout(() => setScreen("tasks"), 500);
   });
 
-  setCategory(state.category);
-  const initial = location.hash.replace("#","") || "home";
-  setScreen(initial);
-
-  window.addEventListener("hashchange", () => {
-    const name = location.hash.replace("#","") || "home";
-    if (screens.includes(name)) setScreen(name);
+  $("#reset-demo-btn")?.addEventListener("click", () => {
+    resetSimulator({notify:true});
   });
+
+  // Every page load starts fresh. No account, cookies, local storage,
+  // session storage, or backend state is used for the simulator.
+  resetSimulator();
 })();
