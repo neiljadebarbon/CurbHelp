@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f7faf8" />
+  <meta name="description" content="CurbHelp prototype — simple exterior-only neighborhood tasks." />
+  <title>CurbHelp</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="stage">
+    <section class="phone" aria-label="CurbHelp mobile prototype">
+      <div class="statusbar" aria-hidden="true">
+        <span>9:41</span>
+        <span class="status-icons">▮▮▮  Wi-Fi  ▰</span>
+      </div>
+
+      <div id="screen-home" class="screen active">
+        <header class="app-header">
+          <div class="brand" aria-label="CurbHelp">
+            <span class="brand-leaf">◆</span>
+            <span>Curb<span>Help</span></span>
+          </div>
+          <button class="icon-button" aria-label="Notifications">♢</button>
+        </header>
+
+        <section class="content">
+          <article class="card property-card">
+            <div class="property-thumb house-thumb">⌂</div>
+            <div class="grow">
+              <h2>Verified property</h2>
+              <p><span class="verified-dot">✓</span> Home • Property verified</p>
+            </div>
+            <span class="chevron">›</span>
+          </article>
+
+          <button class="primary-btn large" data-go="post">
+            <span class="circle-plus">＋</span> Post an exterior task
+          </button>
+
+          <button class="card repeat-card" data-go="post">
+            <div class="task-icon blue">↻</div>
+            <div class="grow left">
+              <h2>Repeat a recent chore</h2>
+              <p>Trash bins to curb</p>
+              <small>$10 • Wednesday evening</small>
+            </div>
+            <span class="chevron">›</span>
+          </button>
+
+          <div class="section-title-row">
+            <h2 class="section-title">Popular near you</h2>
+            <button class="text-link">See all</button>
+          </div>
+
+          <div class="task-grid">
+            <button class="mini-card" data-fill="Trash bins">
+              <span class="task-emoji">🗑️</span>
+              <span><strong>Bins</strong><small>Move to curb</small></span>
+              <span class="chevron">›</span>
+            </button>
+            <button class="mini-card" data-fill="Sweep walkway">
+              <span class="task-emoji">🧹</span>
+              <span><strong>Sweep walkway</strong><small>Keep it tidy</small></span>
+              <span class="chevron">›</span>
+            </button>
+            <button class="mini-card" data-fill="Yard debris">
+              <span class="task-emoji">🍃</span>
+              <span><strong>Yard debris</strong><small>Bag or move</small></span>
+              <span class="chevron">›</span>
+            </button>
+            <button class="mini-card" data-fill="Water plants">
+              <span class="task-emoji">🪴</span>
+              <span><strong>Water plants</strong><small>Keep it healthy</small></span>
+              <span class="chevron">›</span>
+            </button>
+          </div>
+
+          <button class="card row-card" data-fill="Pull weeds">
+            <span class="task-emoji big">🌱</span>
+            <span class="grow left"><strong>Pull weeds</strong><small>Exterior areas only</small></span>
+            <span class="chevron">›</span>
+          </button>
+        </section>
+      </div>
+
+      <div id="screen-post" class="screen">
+        <header class="app-header compact">
+          <button class="back-btn" data-go="home" aria-label="Back">‹</button>
+          <div></div>
+        </header>
+
+        <section class="content post-content">
+          <h1>Post a Task</h1>
+          <p class="subtitle">Tell helpers what you need done.</p>
+
+          <button class="form-card">
+            <span class="field-icon">⌂</span>
+            <span class="grow left"><small>Property</small><strong>Verified Home</strong></span>
+            <span class="chevron">›</span>
+          </button>
+
+          <button class="form-card" id="category-row">
+            <span class="field-icon">🗑️</span>
+            <span class="grow left"><small>Category</small><strong id="category-value">Trash bins</strong></span>
+            <span class="chevron">›</span>
+          </button>
+
+          <button class="form-card tall">
+            <span class="field-icon">⌖</span>
+            <span class="grow left">
+              <small>Authorized work area</small>
+              <strong>Driveway → curb only</strong>
+              <span class="helper-copy">Add a photo and mark the allowed area for helpers.</span>
+              <span class="workarea-art" aria-hidden="true">
+                <span class="lawn"></span><span class="driveway"></span><span class="zone"></span>
+              </span>
+            </span>
+            <span class="chevron">›</span>
+          </button>
+
+          <button class="form-card">
+            <span class="field-icon green">$</span>
+            <span class="grow left"><small>Offer</small><strong>$10</strong></span>
+            <span class="chevron">›</span>
+          </button>
+
+          <button class="form-card">
+            <span class="field-icon blue-bg">◷</span>
+            <span class="grow left"><small>Time window</small><strong>6:00 – 8:00 PM</strong></span>
+            <span class="chevron">›</span>
+          </button>
+
+          <button class="primary-btn large bottom-action" id="post-task-btn">Post task</button>
+        </section>
+      </div>
+
+      <div id="screen-helper" class="screen">
+        <header class="app-header compact">
+          <button class="back-btn" data-go="post" aria-label="Back">‹</button>
+          <div></div>
+        </header>
+
+        <section class="content helper-content">
+          <h1>Helper View</h1>
+          <p class="subtitle">Review the task and route to decide.</p>
+
+          <div class="map-card" aria-label="Illustrated route map">
+            <div class="map-grid"></div>
+            <div class="route-line route-a"></div>
+            <div class="route-line route-b"></div>
+            <span class="map-start"></span>
+            <span class="map-home">⌂</span>
+            <span class="map-chip">🚶 4 min</span>
+          </div>
+
+          <article class="job-card">
+            <div class="job-top">
+              <span class="task-icon green">🗑️</span>
+              <div class="grow left">
+                <h2>$10 • Trash bins</h2>
+                <p>Move 2 bins from driveway to curb.</p>
+                <small>Exterior-only verified property.</small>
+              </div>
+            </div>
+            <div class="detail-row"><span>◷ &nbsp; Estimated time</span><strong>4 min</strong></div>
+            <div class="detail-row"><span>✓ &nbsp; Safety</span><strong>Before photo required</strong></div>
+          </article>
+
+          <button class="secondary-primary bottom-action" id="accept-task-btn">Accept task</button>
+        </section>
+      </div>
+
+      <div id="screen-complete" class="screen">
+        <header class="app-header compact">
+          <button class="back-btn" data-go="helper" aria-label="Back">‹</button>
+          <div></div>
+        </header>
+
+        <section class="content complete-content">
+          <h1>Complete Task</h1>
+          <p class="subtitle">Confirm you completed the work.</p>
+
+          <article class="form-card static">
+            <span class="field-icon green">✓</span>
+            <span class="grow left"><strong>Check-in verified</strong><small>GPS confirms authorized property</small></span>
+            <span class="chevron">›</span>
+          </article>
+
+          <article class="photo-card">
+            <div class="photo-heading"><span class="camera-icon">▣</span><div><strong>Before photo</strong><small>Photo captured at 6:18 PM</small></div></div>
+            <div class="yard-photo before"><span class="bin bin-1"></span><span class="bin bin-2"></span></div>
+          </article>
+
+          <article class="photo-card">
+            <div class="photo-heading"><span class="camera-icon">▣</span><div><strong>After photo</strong><small>Photo captured at 6:22 PM</small></div></div>
+            <div class="yard-photo after"><span class="curb"></span><span class="bin bin-1"></span><span class="bin bin-2"></span></div>
+          </article>
+
+          <article class="total-card">
+            <span>▤ &nbsp; Customer total</span>
+            <strong>$11.50</strong>
+          </article>
+
+          <button class="primary-btn large bottom-action" id="complete-task-btn">Submit completion</button>
+        </section>
+      </div>
+
+      <div id="screen-tasks" class="screen">
+        <header class="simple-title"><h1>Tasks</h1></header>
+        <section class="content">
+          <article class="card task-list-card">
+            <span class="task-emoji big">🗑️</span>
+            <span class="grow left"><strong>Trash bins to curb</strong><small>Today • 6:00–8:00 PM</small></span>
+            <span class="pill success">Posted</span>
+          </article>
+          <article class="card task-list-card">
+            <span class="task-emoji big">🧹</span>
+            <span class="grow left"><strong>Sweep walkway</strong><small>Last Saturday</small></span>
+            <span class="pill">Done</span>
+          </article>
+        </section>
+      </div>
+
+      <div id="screen-route" class="screen">
+        <header class="simple-title"><h1>Route</h1></header>
+        <section class="content">
+          <div class="map-card route-screen-map">
+            <div class="map-grid"></div>
+            <div class="route-line route-a"></div>
+            <div class="route-line route-b"></div>
+            <span class="map-start"></span><span class="map-home">⌂</span><span class="map-chip">2 nearby tasks</span>
+          </div>
+          <article class="card">
+            <h2>Nearby route</h2>
+            <p class="muted">Two exterior-only chores are within walking distance.</p>
+          </article>
+        </section>
+      </div>
+
+      <div id="screen-profile" class="screen">
+        <header class="simple-title"><h1>Profile</h1></header>
+        <section class="content">
+          <article class="profile-card">
+            <div class="avatar">CH</div>
+            <h2>CurbHelp Demo</h2>
+            <p>No login required for this prototype.</p>
+          </article>
+          <article class="card info-list">
+            <p><strong>Verified property</strong><span>✓</span></p>
+            <p><strong>Exterior-only safety mode</strong><span>On</span></p>
+            <p><strong>Prototype data</strong><span>Local device</span></p>
+          </article>
+        </section>
+      </div>
+
+      <nav class="tabbar" aria-label="Bottom navigation">
+        <button data-tab="home" class="tab active"><span>⌂</span><small>Home</small></button>
+        <button data-tab="tasks" class="tab"><span>▤</span><small>Tasks</small></button>
+        <button data-tab="route" class="tab"><span>⌖</span><small>Route</small></button>
+        <button data-tab="profile" class="tab"><span>●</span><small>Profile</small></button>
+      </nav>
+
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
